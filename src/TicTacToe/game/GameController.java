@@ -1,7 +1,6 @@
 package TicTacToe.game;
 
 import TicTacToe.player.Player;
-import TicTacToe.game.Move;
 
 public class GameController {
     private char moveSign;
@@ -15,13 +14,21 @@ public class GameController {
     }
 
     public void switchMoves(Player playerX, Player playerY) {
-        if (playerX.isMyMove()) {
+        if (playerX.isMove()) {
             this.moveSign = Move.Y.getSign();
         } else {
             this.moveSign = Move.X.getSign();
         }
 
-        playerX.changeMyMove();
-        playerY.changeMyMove();
+        playerX.switchMove();
+        playerY.switchMove();
+    }
+
+    public void makeMove(int position) {
+        if (position < 0 || position > 9){
+            throw new IllegalArgumentException("Position index must be between 0 and 9 inclusively");
+        }
+
+
     }
 }
