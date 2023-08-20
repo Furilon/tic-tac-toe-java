@@ -4,12 +4,21 @@ import TicTacToe.game.Grid;
 import TicTacToe.game.Move;
 import TicTacToe.player.Player;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        char y = Move.Y.getSign();
-        System.out.println(y);
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Would you like to play tic-tac-toe? YES or NO: ");
+            String answer = scanner.nextLine().toLowerCase().strip();
 
-        Player playerY = new Player(y);
-        System.out.println(playerY);
+            if (answer.equals("no")) {
+                System.out.println("Alright, see you next time!");
+                System.exit(0);
+            }
+
+
+        }
     }
 }
