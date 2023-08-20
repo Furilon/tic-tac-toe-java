@@ -34,5 +34,39 @@ public class GameController {
         board.fill(position, this.moveSign);
     }
 
+    public int checkForGameResult() {
+        /*
+        * Checks whether the game has resulted in a win, loss, or a tie
+        * @returns 'x' or 'y' if there is a win
+        * @returns 'T' if there is a tie
+        * @returns '0' if there is no result yet and the game should continue
+        * */
+        char[] boardArr = board.getGrid();
+        if    (isFull(boardArr) && (boardArr[0] == boardArr[1] && boardArr[1] == boardArr[2])
+            || (boardArr[3] == boardArr[4] && boardArr[4] == boardArr[5])
+            || (boardArr[6] == boardArr[7] && boardArr[7] == boardArr[8])
+            || (boardArr[0] == boardArr[3] && boardArr[3] == boardArr[6])
+            || (boardArr[1] == boardArr[4] && boardArr[4] == boardArr[7])
+            || (boardArr[2] == boardArr[5] && boardArr[5] == boardArr[8])
+            || (boardArr[0] == boardArr[4] && boardArr[4] == boardArr[8])
+            || (boardArr[2] == boardArr[4] && boardArr[4] == boardArr[6])) {
+
+            return this.moveSign;
+        } else if (isFull(boardArr)) {
+            return 'T';
+        } else {
+            return '0';
+        }
+    }
+
+    private boolean isFull(char[] board) {
+        for (char element : board) {
+            if (element == ' ') {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }
