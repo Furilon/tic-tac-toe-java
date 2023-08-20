@@ -1,10 +1,12 @@
 package TicTacToe.player;
 
+import TicTacToe.game.Move;
+
 public class Player {
-    private char sign;
+    private Move sign;
     private boolean move;
 
-    public Player(char sign) {
+    public Player(Move sign) {
         this.sign = sign;
         this.move = false;
     }
@@ -18,6 +20,6 @@ public class Player {
     }
 
     public String toString() {
-        return "Player " + this.sign;
+        return "Player " + this.sign.getSign();
     }
 }
