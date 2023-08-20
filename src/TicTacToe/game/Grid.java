@@ -14,6 +14,10 @@ public class Grid {
         }
     }
 
+    public char[] getGrid() {
+        return this.grid;
+    }
+
     public void fill(int position, char value) {
         this.grid[position] = value;
     }
