@@ -4,9 +4,11 @@ import TicTacToe.player.Player;
 
 public class GameController {
     private char moveSign;
+    private Grid board;
 
     public GameController(){
         this.moveSign = Move.X.getSign();
+        this.board = new Grid();
     }
 
     public Player createPlayer(Move sign) {
@@ -29,6 +31,8 @@ public class GameController {
             throw new IllegalArgumentException("Position index must be between 0 and 9 inclusively");
         }
 
-
+        board.fill(position, this.moveSign);
     }
+
+
 }
