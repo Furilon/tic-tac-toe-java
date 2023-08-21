@@ -88,6 +88,8 @@ public class GameController {
             this.switchMoves();
             System.out.println(this.board);
         }
+
+        this.board.clear();
     }
 
 }
