@@ -2,10 +2,19 @@ package TicTacToe.game;
 
 public class Grid {
     private final char[] grid;
+    private static Grid instance;
 
     public Grid() {
         this.grid = new char[9];
         initializeGrid();
+    }
+
+    public static Grid getInstance() {
+        if (instance == null) {
+            instance = new Grid();
+        }
+
+        return instance;
     }
 
     private void initializeGrid() {
