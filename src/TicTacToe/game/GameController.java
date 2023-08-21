@@ -26,20 +26,17 @@ public class GameController {
         return new Player(sign);
     }
 
-    public void switchMoves(Player playerX, Player playerY) {
-        if (playerX.isMove()) {
+    public void switchMoves() {
+        if (this.moveSign == Move.X.getSign()) {
             this.moveSign = Move.Y.getSign();
         } else {
             this.moveSign = Move.X.getSign();
         }
-
-        playerX.switchMove();
-        playerY.switchMove();
     }
 
     public void makeMove(int position) {
-        if (position < 0 || position > 9){
-            throw new IllegalArgumentException("Position index must be between 0 and 9 inclusively");
+        if (position < 1 || position > 9){
+            throw new IllegalArgumentException("Position index must be between 1 and 9 inclusively");
         }
 
         board.fill(position, this.moveSign);
@@ -78,6 +75,19 @@ public class GameController {
         }
 
         return true;
+    }
+
+    public void playRound() {
+        for (int i = 0; i < this.board.getGrid().length; i++) {
+            System.out.println("Whose move: " + this.moveSign);
+            System.out.println("Pick a spot (1-9): ");
+            Scanner scanner = new Scanner(System.in);
+            int position = Integer.parseInt(scanner.nextLine());
+            this.board.fill(position - 1, this.moveSign);
+
+            this.switchMoves();
+            System.out.println(this.board);
+        }
     }
 
 }
