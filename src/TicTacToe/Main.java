@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        GameController game = new GameController();
+        GameController game = GameController.getInstance();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {

@@ -9,7 +9,7 @@ public class GameController {
 
     public GameController(){
         this.moveSign = Move.X.getSign();
-        this.board = new Grid();
+        this.board = Grid.getInstance();
     }
 
     public static GameController getInstance() {
