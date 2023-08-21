@@ -1,7 +1,5 @@
 package TicTacToe.game;
 
-import TicTacToe.player.Player;
-
 import java.util.Scanner;
 
 public class GameController {
@@ -20,10 +18,6 @@ public class GameController {
         }
 
         return instance;
-    }
-
-    public Player createPlayer(Move sign) {
-        return new Player(sign);
     }
 
     public void switchMoves() {
@@ -76,6 +70,9 @@ public class GameController {
 
         return true;
     }
+    private boolean isTakenCell(int position) {
+        return this.board.getGrid()[position] == ' ';
+    }
 
     public void playRound() {
         for (int i = 0; i < this.board.getGrid().length; i++) {
@@ -83,13 +80,19 @@ public class GameController {
             System.out.println("Pick a spot (1-9): ");
             Scanner scanner = new Scanner(System.in);
             int position = Integer.parseInt(scanner.nextLine());
-            this.board.fill(position - 1, this.moveSign);
+
+            if (!isTakenCell(position)) {
+                this.board.fill(position - 1, this.moveSign);
+            } else {
+
+            }
 
             this.switchMoves();
             System.out.println(this.board);
         }
 
         this.board.clear();
+
     }
 
 }
