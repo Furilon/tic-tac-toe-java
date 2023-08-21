@@ -29,37 +29,32 @@ public class GameController {
     }
 
     public void makeMove(int position) {
-        if (position < 1 || position > 9){
-            throw new IllegalArgumentException("Position index must be between 1 and 9 inclusively");
-        }
-
         board.fill(position, this.moveSign);
     }
 
-    public int checkForGameResult() {
-        /*
-        * Checks whether the game has resulted in a win, loss, or a tie
-        * @returns 'x' or 'y' if there is a win
-        * @returns 'T' if there is a tie
-        * @returns '0' if there is no result yet and the game should continue
-        * */
+    public GameResult checkForGameResult() {
         char[] boardArr = board.getGrid();
-        if    (isFull(boardArr) && (boardArr[0] == boardArr[1] && boardArr[1] == boardArr[2])
-            || (boardArr[3] == boardArr[4] && boardArr[4] == boardArr[5])
-            || (boardArr[6] == boardArr[7] && boardArr[7] == boardArr[8])
-            || (boardArr[0] == boardArr[3] && boardArr[3] == boardArr[6])
-            || (boardArr[1] == boardArr[4] && boardArr[4] == boardArr[7])
-            || (boardArr[2] == boardArr[5] && boardArr[5] == boardArr[8])
-            || (boardArr[0] == boardArr[4] && boardArr[4] == boardArr[8])
-            || (boardArr[2] == boardArr[4] && boardArr[4] == boardArr[6])) {
 
-            return this.moveSign;
-        } else if (isFull(boardArr)) {
-            return 'T';
+        if (isFull(boardArr)) {
+            return GameResult.TIE;
+        }
+
+        // Check for win condition only if there's a possibility of winning
+        if ((boardArr[0] != ' ' && boardArr[0] == boardArr[1] && boardArr[1] == boardArr[2])
+                || (boardArr[3] != ' ' && boardArr[3] == boardArr[4] && boardArr[4] == boardArr[5])
+                || (boardArr[6] != ' ' && boardArr[6] == boardArr[7] && boardArr[7] == boardArr[8])
+                || (boardArr[0] != ' ' && boardArr[0] == boardArr[3] && boardArr[3] == boardArr[6])
+                || (boardArr[1] != ' ' && boardArr[1] == boardArr[4] && boardArr[4] == boardArr[7])
+                || (boardArr[2] != ' ' && boardArr[2] == boardArr[5] && boardArr[5] == boardArr[8])
+                || (boardArr[0] != ' ' && boardArr[0] == boardArr[4] && boardArr[4] == boardArr[8])
+                || (boardArr[2] != ' ' && boardArr[2] == boardArr[4] && boardArr[4] == boardArr[6])) {
+
+            return GameResult.WIN;
         } else {
-            return '0';
+            return GameResult.CONTINUE;
         }
     }
+
 
     private boolean isFull(char[] board) {
         for (char element : board) {
@@ -71,25 +66,36 @@ public class GameController {
         return true;
     }
     private boolean isTakenCell(int position) {
-        return this.board.getGrid()[position] == ' ';
+        return this.board.getGrid()[position] != ' ';
     }
 
     public void playRound() {
-        for (int i = 0; i < this.board.getGrid().length; i++) {
+        GameResult result = checkForGameResult();
+        while (result == GameResult.CONTINUE) {
             System.out.println("Whose move: " + this.moveSign);
-            System.out.println("Pick a spot (1-9): ");
+            System.out.println("Pick a spot (0-8): ");
             Scanner scanner = new Scanner(System.in);
             int position = Integer.parseInt(scanner.nextLine());
 
-            if (!isTakenCell(position)) {
-                this.board.fill(position - 1, this.moveSign);
-            } else {
+            if (isTakenCell(position)) {
+                System.out.println("This position has been taken. Pick another spot.");
+                continue;
+            }
 
+            this.makeMove(position);
+            System.out.println(this.board);
+
+            result = checkForGameResult();
+            if (result == GameResult.WIN) {
+                System.out.println("Player " + this.moveSign + " won!");
+            } else if (result == GameResult.TIE){
+                System.out.println("It's a tie!");
             }
 
             this.switchMoves();
-            System.out.println(this.board);
         }
+
+
 
         this.board.clear();
 
