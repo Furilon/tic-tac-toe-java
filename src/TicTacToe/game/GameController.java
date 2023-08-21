@@ -2,13 +2,24 @@ package TicTacToe.game;
 
 import TicTacToe.player.Player;
 
+import java.util.Scanner;
+
 public class GameController {
     private char moveSign;
-    private Grid board;
+    private static GameController instance;
+    private final Grid board;
 
     public GameController(){
         this.moveSign = Move.X.getSign();
         this.board = new Grid();
+    }
+
+    public static GameController getInstance() {
+        if (instance == null) {
+            instance = new GameController();
+        }
+
+        return instance;
     }
 
     public Player createPlayer(Move sign) {
